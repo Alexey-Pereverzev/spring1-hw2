@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet("/shop-servlet")
+@WebServlet("/shop-servlet")                        //  http://localhost:8080/servlet-app/shop-servlet
 public class ShopServlet extends HttpServlet {
     private ProductMatrix matrix;
 
