@@ -1,6 +1,6 @@
 package org.example.lesson2.matrix;
 
-public class Product {
+public class Product {          //  Product
     private long id;
     private final String title;
     private final double cost;

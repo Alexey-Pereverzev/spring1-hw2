@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @WebServlet("/shop-servlet")                        //  http://localhost:8080/servlet-app/shop-servlet
+// сервлет магазина
 public class ShopServlet extends HttpServlet {
     private ProductMatrix matrix;
 

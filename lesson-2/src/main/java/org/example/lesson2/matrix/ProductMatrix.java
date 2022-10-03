@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ProductMatrix {
+public class ProductMatrix {            //  список продуктов
     private final Map<Long, Product> productMap = new ConcurrentHashMap<>(10);
     private final AtomicLong identity = new AtomicLong(0);
 
