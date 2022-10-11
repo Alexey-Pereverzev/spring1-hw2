@@ -10,8 +10,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @Repository
 public class ProductMatrix {
-    private Map<Long, Product> productMap = new ConcurrentHashMap<>(10);
-    private AtomicLong identity = new AtomicLong(0);
+    private final Map<Long, Product> productMap = new ConcurrentHashMap<>(10);
+    private final AtomicLong identity = new AtomicLong(0);
 
     @PostConstruct
     public void init(){

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product")            //  какие url он обрабатывает
 public class ProductController {
 
-    private ProductMatrix matrix;
+    private final ProductMatrix matrix;
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
