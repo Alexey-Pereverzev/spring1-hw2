@@ -1,4 +1,4 @@
-lesson-4/HELP.md
+HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -31,9 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-# Project exclude paths
-/lesson-2/target/
-/lesson-3/target/
-/lesson-4-temp/
-/lesson-4-temp-2/
-
