@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+
+<nav th:replace="fragments/head.html :: navbar"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/product/update}" method="post" th:object="${product}">
+                <input type="hidden" th:field="*{id}" id="id" name="id">
+
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" th:field="*{title}" class="form-control" id="title" name="title"
+                           placeholder="Enter product title">
+                    <p class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                        Error: title should be not empty
+                    </p>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Cost</label>
+                    <input type="text" th:field="*{cost}" class="form-control" id="cost" name="cost"
+                           placeholder="Enter cost">
+                    <p class="text-danger" th:if="${#fields.hasErrors('cost')}" th:errors="*{cost}">
+                        Error in cost: should be positive number with no more than 2 digits after comma</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer.html :: scripts"/>
+
+</body>
+
+
+
+<!--                <div class="form-group">-->
+<!--                    <label>Email</label>-->
+<!--                    <input type="text" th:field="*{email}" class="form-control" id="email" name="email" placeholder="Enter email">-->
+<!--                    <p class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Wrong email format</p>-->
+<!--                </div>-->
+
+<!--                <div class="form-group">-->
+<!--                    <label>Password</label>-->
+<!--                    <input type="password" th:field="*{password}" class="form-control" id="password" name="password" placeholder="Enter password">-->
+<!--                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>-->
+<!--                </div>-->
+
+<!--                <div class="form-group">-->
+<!--                    <label>Matching password</label>-->
+<!--                    <input type="password" th:field="*{matchingPassword}" class="form-control" id="matchingPassword" name="matchingPassword" placeholder="Enter matching password">-->
+<!--                    <p class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>-->
+<!--                </div>-->
