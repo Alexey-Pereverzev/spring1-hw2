@@ -1,0 +1,30 @@
+GET http://localhost:8080/spring-mvc-app-hw/api/v1/product/all
+
+###
+
+GET http://localhost:8080/spring-mvc-app-hw/api/v1/product/1
+
+###
+
+POST http://localhost:8080/spring-mvc-app-hw/api/v1/product
+Content-Type: application/json
+
+{
+  "title": "Сухой собачий корм 20кг",
+  "cost": 7500.00
+}
+
+###
+
+PUT http://localhost:8080/spring-mvc-app-hw/api/v1/product
+Content-Type: application/json
+
+  {
+    "id": 12,
+    "title": "Дралка для котов №7",
+    "cost": 890.00
+  }
+
+###
+
+DELETE http://localhost:8080/spring-mvc-app-hw/api/v1/product/10
