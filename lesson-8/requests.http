@@ -9,18 +9,13 @@ GET http://localhost:8080/spring-mvc-app-hw/api/v1/product/1
 POST http://localhost:8080/spring-mvc-app-hw/api/v1/product
 Content-Type: application/json
 
-{
-  "title": "Сухой собачий корм 20кг",
-  "cost": 7500.00
-}
-
 ###
 
 PUT http://localhost:8080/spring-mvc-app-hw/api/v1/product
 Content-Type: application/json
 
   {
-    "id": 12,
+    "id": 21,
     "title": "Дралка для котов №7",
     "cost": 890.00
   }
@@ -28,3 +23,39 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:8080/spring-mvc-app-hw/api/v1/product/10
+
+###
+
+
+
+### РАБОТА С КОРЗИНОЙ:
+
+POST http://localhost:8080/spring-mvc-app-hw/api/v1/cart
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Набор пробников для кошек",
+  "cost": 1249.90,
+  "lineItems": []
+}
+
+###
+
+POST http://localhost:8080/spring-mvc-app-hw/api/v1/cart
+Content-Type: application/json
+
+{
+  "id": 3,
+  "title": "Гуляш для собак биг пак",
+  "cost": 6099.90,
+  "lineItems": []
+}
+
+###
+
+GET http://localhost:8080/spring-mvc-app-hw/api/v1/cart/show
+
+###
+
+DELETE http://localhost:8080/spring-mvc-app-hw/api/v1/cart/0

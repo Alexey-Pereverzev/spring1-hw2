@@ -1,6 +1,8 @@
 package com.example.controller;
 
 
+import com.example.persist.LineItem;
+import com.example.service.CartService;
 import com.example.service.ProductRepr;
 import com.example.service.ProductService;
 import org.slf4j.Logger;
@@ -15,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Controller                              //  это контроллер
@@ -24,9 +29,15 @@ public class RestController {
     private static final Logger logger = LoggerFactory.getLogger(RestController.class);
     private final ProductService productService;
 
+    private final CartService cartService;
+
+    private final List<LineItem> cart;
+
     @Autowired
-    public RestController(ProductService productService) {
+    public RestController(ProductService productService, CartService cartService) {
         this.productService = productService;
+        this.cartService = cartService;
+        this.cart = new ArrayList<>();
     }
 
 
@@ -70,7 +81,7 @@ public class RestController {
     @GetMapping("/new")
     public String createPage(Model model) {
         logger.info("Creating product page requested");
-        model.addAttribute("newProduct", new ProductRepr("",new BigDecimal(0)));
+        model.addAttribute("newProduct", new ProductRepr("",new BigDecimal(0),new ArrayList<>(5)));
         return "product_new";
     }
 
