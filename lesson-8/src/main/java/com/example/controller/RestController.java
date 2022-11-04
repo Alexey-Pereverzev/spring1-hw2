@@ -35,6 +35,8 @@ public class RestController {
                            @RequestParam("page") Optional<Integer> page,
                            @RequestParam("size") Optional<Integer> size) {
         logger.info("List page requested");
+
+
         model.addAttribute("products", productService.findAll(page.orElse(1)-1,
                 size.orElse(10)));
         return "product";

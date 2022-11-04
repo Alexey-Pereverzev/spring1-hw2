@@ -8,7 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -23,6 +25,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<ProductRepr> findAll(Integer page, Integer size) {
         return matrix.findAll(PageRequest.of(page,size)).map(ProductRepr::new);
+    }
+
+    @Override
+    public List<ProductRepr> findAll() {
+        return matrix.findAll().stream().map(ProductRepr::new).collect(Collectors.toList());
     }
 
     @Transactional
@@ -42,5 +49,6 @@ public class ProductServiceImpl implements ProductService {
     public void delete(Long id) {
         matrix.deleteById(id);
     }
+
 }
 

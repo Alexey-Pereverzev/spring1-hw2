@@ -19,6 +19,7 @@ public class Product {
     @Column(length = 32, nullable = false)
     private BigDecimal cost;
 
+
     public Product(String title, BigDecimal cost) {
         this.cost = cost;
         this.title = title;
