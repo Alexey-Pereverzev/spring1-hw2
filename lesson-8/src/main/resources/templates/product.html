@@ -33,6 +33,8 @@
                               <form class="d-inline" th:method="delete" th:action = "@{/product/{id}(id = ${product.id})}">
                                   <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
                               </form>
+                              <a class="btn btn-warning" th:href="@{/product/add/{id}(id = ${product.id})}">
+                                  <i class="fas fa-cart-plus"></i></a>
 <!--                              это фиктивная форма, чтобы реализовать метод delete (это post-запрос, зашитый в метод delete) -->
                           </td>
                       </tr>
