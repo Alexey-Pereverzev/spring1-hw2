@@ -35,7 +35,6 @@ public class ProductRepr {
         this.id = product.getId();
         this.cost = product.getCost();
         this.title = product.getTitle();
-        this.lineItems = product.getLineItems();
     }
 
     public Long getId() {
@@ -61,7 +60,7 @@ public class ProductRepr {
     public void setCost(BigDecimal cost) {
         BigDecimal zero = new BigDecimal(0);
         if (cost.compareTo(zero) < 0) {
-            cost=zero;
+            cost = zero;
         }
         this.cost = cost;
     }

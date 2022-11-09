@@ -3,82 +3,79 @@
 
 <head th:replace="fragments/head.html :: head"/>
 
-   <body>
+<body>
 
-   <nav th:replace="fragments/head.html :: navbar"/>
+<nav th:replace="fragments/head.html :: navbar ('Products')"/>
 
-      <div class="container">
-          <div class="row py-2">
-              <div class="col-12">
-                  <a class="btn btn-primary" th:href="@{/product/new}">Добавить</a>
-              </div>
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/product/new}">Добавить</a>
+        </div>
 
-              <div class="col-12">
-                  <table class="table table-bordered my-2">
-                      <thead>
-                      <tr>
-                          <th scope="col">Id</th>
-                          <th scope="col">Title</th>
-                          <th scope="col">Cost</th>
-                          <th scope="col">Actions</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr th:each="product : ${products.content}" >
-                          <th th:text="${product.id}" scope="row">1</th>
-                          <td th:text="${product.title}">Product</td>
-                          <td th:text="${product.cost}">0</td>
-                          <td>
-                              <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
-                              <form class="d-inline" th:method="delete" th:action = "@{/product/{id}(id = ${product.id})}">
-                                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                              </form>
-                              <a class="btn btn-warning" th:href="@{/product/add/{id}(id = ${product.id})}">
-                                  <i class="fas fa-cart-plus"></i></a>
-<!--                              это фиктивная форма, чтобы реализовать метод delete (это post-запрос, зашитый в метод delete) -->
-                          </td>
-                      </tr>
-                      </tbody>
-                  </table>
-              </div>
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Cost</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products.content}" >
+                    <th th:text="${product.id}" scope="row">1</th>
+                    <td th:text="${product.title}">Product</td>
+                    <td th:text="${product.cost}">0</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action = "@{/product/{id}(id = ${product.id})}">
+                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-              <div th:with="pagenum=${products.number}"  class="col-12">
-                  <nav aria-label="...">
-                      <ul class="pagination">
-                          <li th:if="${products.number>0}" class="page-item">
-                              <a th:href="@{/product(page=${products.number},
+        <div th:with="pagenum=${products.number}"  class="col-12">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li th:if="${products.number>0}" class="page-item">
+                        <a th:href="@{/product(page=${products.number},
                               size=${products.size})}" class="page-link">Previous</a>
-                          </li>
+                    </li>
 
-                          <li th:if="${products.number<=0}" class="page-item disabled">
-                              <a href="#" class="page-link">Previous</a>
-                          </li>
+                    <li th:if="${products.number<=0}" class="page-item disabled">
+                        <a href="#" class="page-link">Previous</a>
+                    </li>
 
-                          <li th:each="num: ${#numbers.sequence(1, products.totalPages)}"
-                              th:classappend="${num == products.number + 1} ? 'active'"
-                              class="page-item">
-                              <a th:text="${num}"
-                                 th:href="@{/product(page=${num}, size=${products.size})}"
-                                 class="page-link" >1
-                                  <span th:if="${num == products.number + 1}" class="sr-only">(current)</span></a>
-                          </li>
+                    <li th:each="num: ${#numbers.sequence(1, products.totalPages)}"
+                        th:classappend="${num == products.number + 1} ? 'active'"
+                        class="page-item">
+                        <a th:text="${num}"
+                           th:href="@{/product(page=${num}, size=${products.size})}"
+                           class="page-link" >1
+                            <span th:if="${num == products.number + 1}" class="sr-only">(current)</span></a>
+                    </li>
 
-                          <li th:if="${products.number<=(products.totalPages)-2}" class="page-item">
-                              <a th:href="@{/product(page=${products.number + 2},
+                    <li th:if="${products.number<=(products.totalPages)-2}" class="page-item">
+                        <a th:href="@{/product(page=${products.number + 2},
                               size=${products.size})}" class="page-link">Next</a>
-                          </li>
-                          <li th:if="${products.number>(products.totalPages)-2}" class="page-item disabled">
-                              <a href="#" class="page-link">Next</a>
-                          </li>
-                      </ul>
-                  </nav>
-              </div>
+                    </li>
+                    <li th:if="${products.number>(products.totalPages)-2}" class="page-item disabled">
+                        <a href="#" class="page-link">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
 
 
-          </div>
-      </div>
+    </div>
+</div>
 
-    <th:block th:replace="fragments/footer.html :: scripts"/>
+<th:block th:replace="fragments/footer.html :: scripts"/>
 
-    </body>
+</body>
 </html>

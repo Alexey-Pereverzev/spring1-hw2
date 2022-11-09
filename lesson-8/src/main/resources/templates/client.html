@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="fragments/head.html :: head"/>
+
+   <body>
+
+   <nav th:replace="fragments/head.html :: navbar ('Clients')"/>
+
+      <div class="container">
+          <div class="row py-2">
+              <div class="col-12" sec:authorize="hasRole('SUPER_ADMIN')">
+                      <a class="btn btn-primary" th:href="@{/client/new}">
+                          Добавить
+                      </a>
+              </div>
+
+
+              <div class="col-12">
+                  <table class="table table-bordered my-2">
+                      <thead>
+                      <tr>
+                          <th scope="col">Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col" sec:authorize="hasRole('SUPER_ADMIN')" >Actions</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr th:each="client : ${clients.content}" >
+                          <th th:text="${client.id}" scope="row">1</th>
+                          <td th:text="${client.name}">Client</td>
+                          <td  sec:authorize="hasRole('SUPER_ADMIN')">
+                              <a class="btn btn-success" th:href="@{/client/{id}(id = ${client.id})}">
+                                  <i class="fas fa-edit"></i></a>
+                              <form class="d-inline" th:method="delete" th:action = "@{/client/{id}(id = ${client.id})}">
+                                  <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                              </form>
+<!--                              это фиктивная форма, чтобы реализовать метод delete (это post-запрос, зашитый в метод delete) -->
+                          </td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+
+              <div th:with="pagenum=${clients.number}"  class="col-12">
+                  <nav aria-label="...">
+                      <ul class="pagination">
+                          <li th:if="${clients.number>0}" class="page-item">
+                              <a th:href="@{/client(page=${clients.number},
+                              size=${clients.size})}" class="page-link">Previous</a>
+                          </li>
+
+                          <li th:if="${clients.number<=0}" class="page-item disabled">
+                              <a href="#" class="page-link">Previous</a>
+                          </li>
+
+                          <li th:each="num: ${#numbers.sequence(1, clients.totalPages)}"
+                              th:classappend="${num == clients.number + 1} ? 'active'"
+                              class="page-item">
+                              <a th:text="${num}"
+                                 th:href="@{/client(page=${num}, size=${clients.size})}"
+                                 class="page-link" >1
+                                  <span th:if="${num == clients.number + 1}" class="sr-only">(current)</span></a>
+                          </li>
+
+                          <li th:if="${clients.number<=(clients.totalPages)-2}" class="page-item">
+                              <a th:href="@{/client(page=${clients.number + 2},
+                              size=${clients.size})}" class="page-link">Next</a>
+                          </li>
+                          <li th:if="${clients.number>(clients.totalPages)-2}" class="page-item disabled">
+                              <a href="#" class="page-link">Next</a>
+                          </li>
+                      </ul>
+                  </nav>
+              </div>
+
+
+          </div>
+      </div>
+
+    <th:block th:replace="fragments/footer.html :: scripts"/>
+
+    </body>
+</html>

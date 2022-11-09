@@ -28,12 +28,12 @@ public class ProductResource {
 
     @GetMapping(path = "/{id}")
     public ProductRepr findById(@PathVariable("id") Long id) {
-        return productService.findById(id).orElseThrow(NotFoundException:: new);
+        return productService.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @PostMapping(consumes = "application/json")
     public ProductRepr create(@RequestBody ProductRepr productRepr) {
-        if (productRepr.getId()!=null) {
+        if (productRepr.getId() != null) {
             throw new BadRequestException();
         }
         productService.save(productRepr);
@@ -42,14 +42,14 @@ public class ProductResource {
 
     @PutMapping(consumes = "application/json")
     public void update(@RequestBody ProductRepr productRepr) {
-        if (productRepr.getId()==null) {
+        if (productRepr.getId() == null) {
             throw new BadRequestException();
         }
         productService.save(productRepr);
     }
 
-    @DeleteMapping( "/{id}")
-    public void delete (@PathVariable("id") Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") Long id) {
         productService.delete(id);
     }
 
