@@ -30,12 +30,15 @@
             <li  sec:authorize="hasAnyRole('ADMIN', 'SUPER_ADMIN')" class="nav-item" th:classappend="${pageName == 'Clients'} ? 'active'">
                 <a class="nav-link" th:href="@{/client}">Clients</a>
             </li>
+            <li  sec:authorize="hasRole('GUEST')" class="nav-item" th:classappend="${pageName == 'Cart'} ? 'active'">
+                <a class="nav-link" th:href="@{/cart}">Cart</a>
+            </li>
         </ul>
 
         <form sec:authorize="isAuthenticated()"
-              th:action="@{/logout}" th:href="@{/client/login}" class="form-inline my-2 my-lg-0" >
+              th:action="@{/login/logout}" class="form-inline my-2 my-lg-0" >
             <button class="btn btn-outline-success my-2 my-sm-0">
-                Change User <span sec:authentication="principal.username"></span>
+                Log Out <- <span sec:authentication="principal.username"></span>
             </button>
         </form>
 

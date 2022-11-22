@@ -1,5 +1,8 @@
 package com.example.service;
 
+import com.example.persist.ClientRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,24 +14,45 @@ public class CartServiceImpl implements CartService {
 
     private final ArrayList<LineItemRepr> cart = new ArrayList<>();
 
-    @Override
-    public void addToCart(ProductRepr product) {
-        boolean isInCart = false;
-        for (LineItemRepr lineItemRepr : cart) {
-            if (Objects.equals(lineItemRepr.getProduct().getId(), product.getId())) {
-                lineItemRepr.setQty(lineItemRepr.getQty() + 1);
-                isInCart = true;
-                break;
-            }
-        }
-        if (!isInCart) {
-            cart.add(new LineItemRepr(new ClientRepr(), product, product.getCost(), 1, ""));
-        }
+    private final ClientRepository clients;
+
+    private Long currentId = 0L;
+
+    public CartServiceImpl(ClientRepository clients) {
+        this.clients = clients;
     }
 
     @Override
-    public List<LineItemRepr> showCart() {
-        return cart;
+    public LineItemRepr addToCart(ProductRepr product) {
+        ClientRepr currentClient = getCurrentClient();
+        LineItemRepr lineItemRepr = new LineItemRepr(currentId + 1, currentClient, product, product.getCost(), 1,"");
+        for (LineItemRepr itemRepr : cart) {
+            if (Objects.equals(itemRepr.getProduct().getId(), product.getId())
+                    && Objects.equals(itemRepr.getClient().getId(), currentClient.getId())) {
+                itemRepr.setQty(itemRepr.getQty() + 1);
+                return itemRepr;
+            }
+        }
+        cart.add(lineItemRepr);
+        currentId = currentId + 1;
+        return lineItemRepr;
+    }
+
+    @Override
+    public List<LineItemRepr> showCartForCurrentClient() {
+        ClientRepr currentClient = getCurrentClient();
+        ArrayList<LineItemRepr> cartForCurrentClient = new ArrayList<>();
+        for (LineItemRepr lineItemRepr : cart) {
+            if (lineItemRepr.getClient().getName().equals(currentClient.getName())) {
+                cartForCurrentClient.add(lineItemRepr);
+            }
+        }
+        return cartForCurrentClient;
+    }
+
+    private ClientRepr getCurrentClient() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return new ClientRepr(clients.findClientByName(user.getUsername()).orElseThrow());
     }
 
     @Override

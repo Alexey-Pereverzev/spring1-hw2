@@ -4,27 +4,20 @@ import com.example.controller.BadRequestException;
 import com.example.service.CartService;
 import com.example.service.LineItemRepr;
 import com.example.service.ProductRepr;
-import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cart")         // версия v1
 public class CartOperations {
-
-    private ArrayList<LineItemRepr> lineItems;
     private final CartService cartService;
-    private final ProductService productService;
 
     @Autowired
-    public CartOperations(CartService cartService, ProductService productService) {
-        this.productService = productService;
-        this.lineItems = new ArrayList<>();
+    public CartOperations(CartService cartService) {
         this.cartService = cartService;
     }
 
@@ -36,12 +29,12 @@ public class CartOperations {
 
     @GetMapping(path = "/show", produces = "application/json")
     public List<LineItemRepr> showCart() {
-        return cartService.showCart();
+        return cartService.showCartForCurrentClient();
     }
 
     @DeleteMapping("/{id}")
     public void deleteLineItem(@PathVariable("id") Long id) {
-        LineItemRepr lineItem = cartService.showCart().get(Math.toIntExact(id));
+        LineItemRepr lineItem = cartService.showCartForCurrentClient().get(Math.toIntExact(id));
         cartService.deleteLineItem(lineItem);
     }
 

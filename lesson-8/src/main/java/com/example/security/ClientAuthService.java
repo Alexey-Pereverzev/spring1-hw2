@@ -32,6 +32,6 @@ public class ClientAuthService implements UserDetailsService {
                         client.getRoles().stream()
                                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                                 .collect(Collectors.toList()
-                        ))).orElseThrow(() -> new UsernameNotFoundException("Client not found"));
+                                ))).orElseThrow(() -> new UsernameNotFoundException("Client not found"));
     }
 }

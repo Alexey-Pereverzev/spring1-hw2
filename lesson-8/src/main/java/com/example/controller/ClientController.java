@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,11 +34,11 @@ public class ClientController {
         this.roleRepository = roleRepository;
     }
 
+    @Secured({"ROLE_SUPER_ADMIN", "ROLE_ADMIN"})
     @GetMapping
     public String listPage(Model model,
                            @RequestParam("page") Optional<Integer> page,
-                           @RequestParam("size") Optional<Integer> size
-    ) {
+                           @RequestParam("size") Optional<Integer> size) {
         logger.info("List page requested");
         model.addAttribute("clients", clientService.findAll(page.orElse(1) - 1,
                 size.orElse(5)));
@@ -45,6 +46,7 @@ public class ClientController {
         return "client";
     }
 
+    @Secured({"ROLE_SUPER_ADMIN"})
     @GetMapping("/{id}")
     public String editPage(@PathVariable("id") Long id, Model model) {
         logger.info("Edit page for id {} requested", id);
@@ -55,6 +57,7 @@ public class ClientController {
     }
 
 
+    @Secured({"ROLE_SUPER_ADMIN"})
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("client") ClientRepr client, BindingResult result, Model model) {
         logger.info("Update endpoint requested");
@@ -79,15 +82,18 @@ public class ClientController {
     }
 
 
+    @Secured({"ROLE_SUPER_ADMIN"})
     @GetMapping("/new")
     public String createPage(Model model) {
         logger.info("Create new client request");
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("newClient",
-                new ClientRepr("", "", "", new HashSet<>(2)));
+                new ClientRepr("", "", "",
+                        new HashSet<>(2)));
         return "client_new";
     }
 
+    @Secured({"ROLE_SUPER_ADMIN"})
     @PostMapping("/addNew")
     public String addNewClient(@Valid @ModelAttribute("newClient") ClientRepr client, BindingResult result, Model model) {
         logger.info("Creating new client");
@@ -103,7 +109,7 @@ public class ClientController {
         return "redirect:/client";
     }
 
-
+    @Secured({"ROLE_SUPER_ADMIN"})
     @DeleteMapping("/{id}")
     public String remove(@PathVariable("id") Long id) {
         logger.info("Client delete request");
@@ -118,8 +124,4 @@ public class ClientController {
         return mav;
     }
 
-    @GetMapping("/login")
-    public String showMyLoginPage() {
-        return "modern-login";
-    }
 }

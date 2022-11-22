@@ -1,34 +1,26 @@
 package com.example.service;
 
-import com.example.persist.LineItem;
-
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class LineItemRepr {
     private Long id;
 
-    @NotEmpty
     private ClientRepr client;
 
-    @NotEmpty
     private ProductRepr product;
 
-    @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer = 10, fraction = 2)
     private BigDecimal price;
 
     private Integer qty;
 
     private String color;
 
-
     public LineItemRepr() {
     }
 
-    public LineItemRepr(ClientRepr client, ProductRepr product, BigDecimal price, Integer qty, String color) {
+    public LineItemRepr(Long id, ClientRepr client, ProductRepr product, BigDecimal price, Integer qty, String color) {
+        this.id = id;
         this.client = client;
         this.product = product;
         this.price = price;
@@ -36,12 +28,12 @@ public class LineItemRepr {
         this.color = color;
     }
 
-    public LineItemRepr(LineItem lineItem) {
-        this.client = new ClientRepr(lineItem.getClient());
-        this.product = new ProductRepr(lineItem.getProduct());
-        this.price = lineItem.getPrice();
-        this.qty = lineItem.getQty();
-        this.color = lineItem.getColor();
+    public LineItemRepr(Long id, Long productId, Long clientId) {
+        this.id = id;
+        this.client = new ClientRepr();
+        this.client.setId(clientId);
+        this.product = new ProductRepr();
+        this.product.setId(productId);
     }
 
     public Long getId() {
@@ -90,5 +82,18 @@ public class LineItemRepr {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LineItemRepr lineItem)) return false;
+        return client.getId().equals(lineItem.getClient().getId())
+                && product.getId().equals(lineItem.getProduct().getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getClient().getId(), getProduct().getId());
     }
 }

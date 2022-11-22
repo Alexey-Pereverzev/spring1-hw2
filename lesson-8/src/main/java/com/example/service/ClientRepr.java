@@ -68,8 +68,7 @@ public class ClientRepr {
     public ClientRepr() {
     }
 
-    public ClientRepr(String name
-            , String password, String matchingPassword, Set<Role> roles) {
+    public ClientRepr(String name, String password, String matchingPassword, Set<Role> roles) {
         this.name = name;
         this.password = password;
         this.matchingPassword = matchingPassword;

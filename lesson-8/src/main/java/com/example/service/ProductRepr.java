@@ -1,13 +1,11 @@
 package com.example.service;
 
-import com.example.persist.LineItem;
 import com.example.persist.Product;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
-import java.util.List;
 
 public class ProductRepr {
 
@@ -20,12 +18,9 @@ public class ProductRepr {
     @Digits(integer = 10, fraction = 2)
     private BigDecimal cost;
 
-    private List<LineItem> lineItems;
-
-    public ProductRepr(String title, BigDecimal cost, List<LineItem> lineItems) {
+    public ProductRepr(String title, BigDecimal cost) {
         this.cost = cost;
         this.title = title;
-        this.lineItems = lineItems;
     }
 
     public ProductRepr() {
@@ -60,16 +55,9 @@ public class ProductRepr {
     public void setCost(BigDecimal cost) {
         BigDecimal zero = new BigDecimal(0);
         if (cost.compareTo(zero) < 0) {
-            cost = zero;
+            cost=zero;
         }
         this.cost = cost;
     }
 
-    public List<LineItem> getLineItems() {
-        return lineItems;
-    }
-
-    public void setLineItems(List<LineItem> lineItems) {
-        this.lineItems = lineItems;
-    }
 }

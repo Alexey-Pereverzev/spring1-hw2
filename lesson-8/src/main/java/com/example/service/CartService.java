@@ -3,7 +3,9 @@ package com.example.service;
 import java.util.List;
 
 public interface CartService {
-    void addToCart(ProductRepr product);
-    List<LineItemRepr> showCart();
+    LineItemRepr addToCart(ProductRepr product);
+
+    List<LineItemRepr> showCartForCurrentClient();
+
     void deleteLineItem(LineItemRepr lineItem);
 }
