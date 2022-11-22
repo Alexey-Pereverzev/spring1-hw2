@@ -17,6 +17,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductMatrix matrix;
 
+
     @Autowired
     public ProductServiceImpl(ProductMatrix matrix) {
         this.matrix = matrix;

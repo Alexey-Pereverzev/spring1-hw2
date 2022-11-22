@@ -9,7 +9,7 @@ public interface ProductService {
     Page<ProductRepr> findAll(Integer page, Integer size);
     List<ProductRepr> findAll();
     Optional<ProductRepr> findById(Long id);
-    void save(ProductRepr user);
+    void save(ProductRepr product);
     void delete(Long id);
 
 

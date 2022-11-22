@@ -1,8 +1,5 @@
 package com.example.controller;
 
-
-import com.example.persist.LineItem;
-import com.example.service.CartService;
 import com.example.service.ProductRepr;
 import com.example.service.ProductService;
 import org.slf4j.Logger;
@@ -18,26 +15,18 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller                              //  это контроллер
 @RequestMapping("/product")            //  какие url он обрабатывает
-public class RestController {
+public class ProductRestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(RestController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
     private final ProductService productService;
 
-    private final CartService cartService;
-
-    private final List<LineItem> cart;
-
     @Autowired
-    public RestController(ProductService productService, CartService cartService) {
+    public ProductRestController(ProductService productService) {
         this.productService = productService;
-        this.cartService = cartService;
-        this.cart = new ArrayList<>();
     }
 
 
@@ -64,11 +53,9 @@ public class RestController {
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("product") ProductRepr product, BindingResult result) {
         logger.info("Update endpoint requested");
-
         if (result.hasErrors()) {
             return "product_form";
         }
-
         if (product.getId() != null) {
             logger.info("Updating product with id{}", product.getId());
         } else {

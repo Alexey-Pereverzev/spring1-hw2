@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class CartServiceImpl implements CartService {
@@ -13,15 +14,15 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addToCart(ProductRepr product) {
         boolean isInCart = false;
-        for (int i = 0; i < cart.size(); i++) {
-            if (cart.get(i).getProduct().getId()==product.getId()) {
-                cart.get(i).setQty(cart.get(i).getQty()+1);
+        for (LineItemRepr lineItemRepr : cart) {
+            if (Objects.equals(lineItemRepr.getProduct().getId(), product.getId())) {
+                lineItemRepr.setQty(lineItemRepr.getQty() + 1);
                 isInCart = true;
                 break;
             }
         }
         if (!isInCart) {
-            cart.add(new LineItemRepr(new CustomerRepr(), product, product.getCost(), 1,""));
+            cart.add(new LineItemRepr(new ClientRepr(), product, product.getCost(), 1, ""));
         }
     }
 

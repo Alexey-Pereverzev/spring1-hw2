@@ -11,7 +11,7 @@ public class LineItemRepr {
     private Long id;
 
     @NotEmpty
-    private CustomerRepr customer;
+    private ClientRepr client;
 
     @NotEmpty
     private ProductRepr product;
@@ -28,8 +28,8 @@ public class LineItemRepr {
     public LineItemRepr() {
     }
 
-    public LineItemRepr(CustomerRepr customer, ProductRepr product, BigDecimal price, Integer qty, String color) {
-        this.customer = customer;
+    public LineItemRepr(ClientRepr client, ProductRepr product, BigDecimal price, Integer qty, String color) {
+        this.client = client;
         this.product = product;
         this.price = price;
         this.qty = qty;
@@ -37,7 +37,7 @@ public class LineItemRepr {
     }
 
     public LineItemRepr(LineItem lineItem) {
-        this.customer = new CustomerRepr(lineItem.getCustomer());
+        this.client = new ClientRepr(lineItem.getClient());
         this.product = new ProductRepr(lineItem.getProduct());
         this.price = lineItem.getPrice();
         this.qty = lineItem.getQty();
@@ -52,12 +52,12 @@ public class LineItemRepr {
         this.id = id;
     }
 
-    public CustomerRepr getCustomer() {
-        return customer;
+    public ClientRepr getClient() {
+        return client;
     }
 
-    public void setCustomer(CustomerRepr customer) {
-        this.customer = customer;
+    public void setClient(ClientRepr client) {
+        this.client = client;
     }
 
     public ProductRepr getProduct() {

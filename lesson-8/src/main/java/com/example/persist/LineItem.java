@@ -15,7 +15,7 @@ public class LineItem {
     private Long id;
 
     @ManyToOne
-    private Customer customer;
+    private Client client;
 
     @ManyToOne
     private Product product;
@@ -29,8 +29,8 @@ public class LineItem {
     public LineItem() {
     }
 
-    public LineItem(Customer customer, Product product, BigDecimal price, Integer qty, String color) {
-        this.customer = customer;
+    public LineItem(Client client, Product product, BigDecimal price, Integer qty, String color) {
+        this.client = client;
         this.product = product;
         this.price = price;
         this.qty = qty;
@@ -38,7 +38,7 @@ public class LineItem {
     }
 
     public LineItem(LineItemRepr lineItem) {
-        this.customer = new Customer(lineItem.getCustomer());
+        this.client = new Client(lineItem.getClient());
         this.product = new Product(lineItem.getProduct());
         this.price = lineItem.getPrice();
         this.qty = lineItem.getQty();
@@ -53,12 +53,12 @@ public class LineItem {
         this.id = id;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public Client getClient() {
+        return client;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public Product getProduct() {

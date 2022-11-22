@@ -39,7 +39,7 @@ public class CartOperations {
         return cartService.showCart();
     }
 
-    @DeleteMapping( "/{id}")
+    @DeleteMapping("/{id}")
     public void deleteLineItem(@PathVariable("id") Long id) {
         LineItemRepr lineItem = cartService.showCart().get(Math.toIntExact(id));
         cartService.deleteLineItem(lineItem);
