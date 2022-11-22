@@ -31,7 +31,7 @@
                       <tr th:each="client : ${clients.content}" >
                           <th th:text="${client.id}" scope="row">1</th>
                           <td th:text="${client.name}">Client</td>
-                          <td  sec:authorize="hasRole('SUPER_ADMIN')">
+                          <td sec:authorize="hasRole('SUPER_ADMIN')">
                               <a class="btn btn-success" th:href="@{/client/{id}(id = ${client.id})}">
                                   <i class="fas fa-edit"></i></a>
                               <form class="d-inline" th:method="delete" th:action = "@{/client/{id}(id = ${client.id})}">

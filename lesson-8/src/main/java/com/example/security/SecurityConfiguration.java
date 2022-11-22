@@ -5,12 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
     @Autowired
@@ -37,11 +39,16 @@ public class SecurityConfiguration {
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                     .antMatchers("/**/*.css", "/**/*.js").permitAll()    // доступно всем
-                    .antMatchers("/product/**").permitAll()         // доступно всем
-                    .antMatchers("/client/**").authenticated()        // те, кто авторизовался
+                    .antMatchers("/product/**").authenticated()          // те, кто авторизовался
+                    .antMatchers("/client/**").authenticated()         // те, кто авторизовался
                     .and()
                     .formLogin()
-                    .defaultSuccessUrl("/product");             // авторизуемся через логин-форму
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/product")          // авторизуемся через логин-форму
+                    .and()
+                    .exceptionHandling()
+                    .accessDeniedPage("/access_denied");
+
         }
     }
 }

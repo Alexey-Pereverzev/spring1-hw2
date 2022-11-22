@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller                              //  это контроллер
@@ -36,12 +36,12 @@ public class ProductRestController {
                            @RequestParam("size") Optional<Integer> size) {
         logger.info("List page requested");
 
-
-        model.addAttribute("products", productService.findAll(page.orElse(1)-1,
+        model.addAttribute("products", productService.findAll(page.orElse(1) - 1,
                 size.orElse(10)));
         return "product";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN", "ROLE_MANAGER"})
     @GetMapping("/{id}")
     public String editPage(@PathVariable("id") Long id, Model model) {
         logger.info("Edit page for id {} requested", id);
@@ -50,12 +50,15 @@ public class ProductRestController {
         return "product_form";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("product") ProductRepr product, BindingResult result) {
         logger.info("Update endpoint requested");
+
         if (result.hasErrors()) {
             return "product_form";
         }
+
         if (product.getId() != null) {
             logger.info("Updating product with id{}", product.getId());
         } else {
@@ -65,13 +68,15 @@ public class ProductRestController {
         return "redirect:/product";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN", "ROLE_MANAGER"})
     @GetMapping("/new")
     public String createPage(Model model) {
         logger.info("Creating product page requested");
-        model.addAttribute("newProduct", new ProductRepr("",new BigDecimal(0),new ArrayList<>(5)));
+        model.addAttribute("newProduct", new ProductRepr("", new BigDecimal(0)));
         return "product_new";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN", "ROLE_MANAGER"})
     @PostMapping("/addNew")
     public String addNewProduct(@Valid @ModelAttribute("newProduct") ProductRepr product, BindingResult result) {
         logger.info("Creating new product");
@@ -82,6 +87,7 @@ public class ProductRestController {
         return "redirect:/product";
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_SUPER_ADMIN", "ROLE_MANAGER"})
     @DeleteMapping("/{id}")
     public String remove(@PathVariable("id") Long id) {
         logger.info("Product delete request");

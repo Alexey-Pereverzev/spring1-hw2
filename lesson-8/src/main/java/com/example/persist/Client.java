@@ -70,8 +70,7 @@ public class Client {
         this.roles = client.getRoles();
     }
 
-    public Client(String name, String password , Set<Role> roles)
-    {
+    public Client(String name, String password , Set<Role> roles) {
         this.name = name;
         this.password = password;
         this.roles = roles;
